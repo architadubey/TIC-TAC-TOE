@@ -1,0 +1,61 @@
+Tic Tac Toe AI - Project Explanation
+
+1. OVERVIEW
+--------------------------------------------------
+This project is an advanced "Tic Tac Toe" application that features two distinct implementations:
+1. A Desktop Application built with Python and CustomTkinter.
+2. A Full-Stack Web Application built with Flask (Python), HTML, CSS, and Vanilla JavaScript.
+
+The primary highlight of the project is the unbeatable AI opponent, which is powered by the "Minimax algorithm." The application sports a modern UI (including a dark mode glassmorphism theme for the web part) and allows for both Player vs. Computer and Player vs. Player gameplay.
+
+
+2. PROJECT STRUCTURE 
+--------------------------------------------------
+The project is divided into several interconnected files:
+
+- main.py (Desktop App)
+  This is a standalone desktop application. It uses `customtkinter` to generate a modern GUI. It houses the visual building blocks (canvas, buttons, menus), internal game state management, and the `MinimaxAI` class logic locally.
+
+- app.py (Web Backend)
+  This is the Flask web server. It contains two main routes:
+  1. `/` -> Serves the main webpage (`index.html`).
+  2. `/api/move` -> A POST endpoint that receives the current state of the board and the chosen difficulty, calculates the best move using the `MinimaxAI` class, and responds via JSON.
+
+- templates/index.html (Web Frontend Structure)
+  The structural component of the web app. It sets up the UI, such as the main menu, the 3x3 game board grid, and scoreboards using modern typography and layout concepts.
+
+- static/style.css (Web Styling)
+  Responsible for the visually striking design of the web app. It uses CSS Flexbox/Grid for layout and implements advanced UI trends like "Glassmorphism" (semi-transparent backgrounds with background-blur filters).
+
+- static/app.js (Web Frontend Logic)
+  Controls the user interactions in the browser. It handles:
+  1. Managing game state (board array, current turn, scores).
+  2. Rendering the board and responding to mouse clicks.
+  3. Making asynchronous `fetch` API requests to the Python Flask server to get the computer's moves.
+  4. Detecting wins and triggering specialized SVG line animations.
+
+
+3. CORE CONCEPTS & ALGORITHMS
+--------------------------------------------------
+A. Minimax Algorithm
+The core of the "Unbeatable" AI difficulty is the Minimax algorithm. Tic Tac Toe is a zero-sum game with perfect information, meaning both players know everything about the game state, and one player's gain is the other player's loss. 
+- Minimax mathematically represents this by attempting to maximize the AI's score (+10) while minimizing the human player's score (-10). 
+- It simulates every single possible combination of future moves on the board until a terminal state is reached (win, lose, or draw). 
+- Based on these future simulations, it traces back a value to the current active turn, guaranteeing that the AI will always pick the best possible path to win or force a draw.
+
+B. Alpha-Beta Pruning
+Included inside the Minimax function is an optimization called "Alpha-Beta Pruning". Since predicting the future for every single board state can take time (even on a 3x3 grid), Alpha-Beta Pruning keeps track of the worst-case scenario. If the simulation finds a path that is worse than an alternative path it already explored, it stops evaluating that branch entirely ("pruning" it). This massively speeds up the AI's decision-making process.
+
+C. Difficulty Tiers
+The AI class (`MinimaxAI`) has three difficulties implemented:
+- Easy: Picks a completely random available cell.
+- Medium: Simulates one move ahead to aggressively win if it can, or immediately block the human if they are about to win. Otherwise, it guesses randomly.
+- Unbeatable: Uses the full Minimax algorithm to map out the entire game tree.
+
+D. Game Flow and API Communication (Web)
+When the user clicks a tile in the browser (`app.js`), the JavaScript updates its local board array and checks if the game is over. If the next turn goes to the computer, it suspends interaction and sends the `board` via a POST HTTP request to `app.py`. The Python Flask server instantiates `MinimaxAI`, evaluates the board, and replies with coordinates (e.g., Row 1, Col 2). The frontend then draws the "O" in that slot.
+
+
+4. CONCLUSION
+--------------------------------------------------
+This project is an excellent demonstration of uniting a heavy mathematical backbone (Minimax) with user-friendly web and graphical interfaces. By separating the web game into a Frontend (JS/HTML/CSS) and a Backend API (Flask), it mimics real-world full-stack development patterns where complex computation is offloaded to a server while the browser maintains a smooth graphical experience.

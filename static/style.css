@@ -1,0 +1,279 @@
+:root {
+    --bg-dark: #0f172a;
+    --glass-bg: rgba(30, 41, 59, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-primary: #f8fafc;
+    --text-muted: #94a3b8;
+    
+    --color-x: #c084fc; /* Bright Purple */
+    --color-o: #22d3ee; /* Cyan */
+    --color-win: #4ade80; /* Green */
+    --color-primary: #818cf8; /* Indigo accent */
+    --color-primary-hover: #6366f1;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Background animated orbs for modern aesthetics */
+.background-orbs {
+    position: absolute;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.5;
+    animation: float 20s infinite alternate linear;
+}
+
+.orb-1 { width: 400px; height: 400px; background: #6366f1; top: -100px; left: -100px; animation-delay: 0s; }
+.orb-2 { width: 500px; height: 500px; background: #c084fc; bottom: -200px; right: -100px; animation-delay: -5s; }
+.orb-3 { width: 300px; height: 300px; background: #22d3ee; top: 40%; left: 50%; animation-delay: -10s; }
+
+@keyframes float {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+/* Glassmorphism Panel */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 40px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    display: none; /* hidden by default */
+    flex-direction: column;
+    align-items: center;
+    transition: opacity 0.3s ease;
+}
+
+.glass-panel.active {
+    display: flex;
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Main Menu Typography */
+.logo {
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+.logo span { color: var(--color-primary); }
+.subtitle {
+    color: var(--text-muted);
+    margin-bottom: 40px;
+    font-weight: 300;
+}
+
+/* Custom Segments/Toggles */
+.settings-group {
+    width: 100%;
+    margin-bottom: 24px;
+}
+.settings-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.toggle-container {
+    display: flex;
+    background: rgba(0,0,0,0.3);
+    border-radius: 12px;
+    padding: 4px;
+}
+.toggle-option {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+.toggle-option.active {
+    background: var(--color-primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+/* Buttons */
+.primary-btn, .secondary-btn {
+    border: none;
+    border-radius: 12px;
+    padding: 16px 32px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+.primary-btn {
+    background: var(--color-primary);
+    color: white;
+    width: 100%;
+    margin-top: 20px;
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+}
+.primary-btn:hover { background: var(--color-primary-hover); transform: translateY(-2px); }
+.primary-btn:active { transform: translateY(0); }
+
+.secondary-btn {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--glass-border);
+}
+.secondary-btn:hover { background: rgba(255,255,255,0.05); color: white; }
+
+.hidden { display: none !important; }
+
+/* ---------------- GAME VIEW ---------------- */
+
+.top-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.score-card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+.score-card span:nth-child(1) { font-size: 0.9rem; color: var(--text-muted); }
+.score-card span:nth-child(2) { font-size: 1.8rem; font-weight: 800; }
+.score-card:nth-child(1) .score { color: var(--color-x); }
+.score-card:nth-child(3) .score { color: var(--color-o); }
+.draw-card .score { color: white; }
+
+#status-text {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+/* The Grid */
+.board-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin-bottom: 40px;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: 100%;
+    height: 100%;
+    gap: 8px; /* Thickness of "grid lines" */
+    background: var(--glass-border); /* Grid line color */
+    border: 8px solid var(--glass-border);
+    border-radius: 12px;
+}
+
+.cell {
+    background: var(--bg-dark); /* Blend in with app background behind the glass */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+    user-select: none;
+    position: relative;
+}
+
+.cell:hover {
+    background: rgba(255,255,255,0.03);
+}
+
+/* Hover highlights generated by CSS */
+.cell[data-hover="X"]:hover::after {
+    content: 'X';
+    color: var(--color-x);
+    opacity: 0.15;
+    position: absolute;
+}
+.cell[data-hover="O"]:hover::after {
+    content: 'O';
+    color: var(--color-o);
+    opacity: 0.15;
+    position: absolute;
+}
+
+/* Played tokens */
+.cell.x {
+    color: var(--color-x);
+    text-shadow: 0 0 15px rgba(192, 132, 252, 0.6);
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.cell.o {
+    color: var(--color-o);
+    text-shadow: 0 0 15px rgba(34, 211, 238, 0.6);
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Win Line SVG Overlay */
+#win-line-svg {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; /* Let clicks pass through to cells */
+}
+#win-line {
+    stroke: var(--color-win);
+    stroke-width: 8;
+    stroke-linecap: round;
+    filter: drop-shadow(0 0 8px var(--color-win));
+    transition: stroke-dashoffset 0.5s ease-in-out;
+}
+
+.bottom-controls {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    width: 100%;
+}
+.bottom-controls button {
+    flex: 1;
+    margin-top: 0; /* Override generic margin */
+}
