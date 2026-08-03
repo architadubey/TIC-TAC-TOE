@@ -6,7 +6,7 @@ Both versions boast an **Unbeatable AI** powered by the Minimax algorithm with A
 
 ---
 
-## 🌟 Features
+## 🌟 Features 
 
 - **Dual Interfaces**: Choose between a standalone Desktop App or a responsive Full-Stack Web App.
 - **Unbeatable AI**: The "Unbeatable" difficulty setting uses the Minimax algorithm to ensure the computer never loses.
