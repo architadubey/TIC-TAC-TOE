@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, jsonify
 import math
 import random
 
+#this is tic tac toe game for python
+
 app = Flask(__name__)
 
 class MinimaxAI:
